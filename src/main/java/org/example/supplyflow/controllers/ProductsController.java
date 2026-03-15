@@ -1,39 +1,46 @@
 package org.example.supplyflow.controllers;
 
-import ch.qos.logback.core.model.Model;
 import org.example.supplyflow.entities.Products;
-import org.example.supplyflow.entities.Supplier;
 import org.example.supplyflow.services.ProductsServices;
+import org.example.supplyflow.services.SupplierServices;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/Products")
+@RequestMapping("/products")
 public class ProductsController {
-    private final ProductsServices productsServices;
 
-    public ProductsController(ProductsServices productsServices) {
+    private final ProductsServices productsServices;
+    private final SupplierServices supplierServices;
+
+    public ProductsController(ProductsServices productsServices, SupplierServices supplierServices) {
         this.productsServices = productsServices;
+        this.supplierServices = supplierServices;
     }
 
     @GetMapping
-    public String getAllProducts(Model model){
-        
+    public String listProducts(Model model) {
+        model.addAttribute("products", productsServices.getAllProducts());
+        return "products/list";
     }
 
-    @GetMapping("/{id}")
-    public Products getProductByid(@PathVariable int id){
-        return productsServices.getProductById(id);
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("product", new Products());
+        model.addAttribute("suppliers", supplierServices.findAllSuppliers());
+        return "products/add-product";
     }
-    @PostMapping
-    public void addProduct(@RequestBody Products product){
+
+    @PostMapping("/save")
+    public String saveProduct(@ModelAttribute("product") Products product) {
         productsServices.saveProduct(product);
-    }
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable int id){
-        productsServices.deleteByIdProduct(id);
+        return "redirect:/products";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable int id) {
+        productsServices.deleteByIdProduct(id);
+        return "redirect:/products";
+    }
 }

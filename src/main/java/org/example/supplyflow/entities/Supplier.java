@@ -2,6 +2,10 @@ package org.example.supplyflow.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Entity
 @Table(name = "supplier")
 public class Supplier {
@@ -13,17 +17,16 @@ public class Supplier {
     private String city;
     private Long phone;
 
-    @OneToMany
-    @JoinColumn(name = "productId")
-    private Products products;
+    @OneToMany(mappedBy = "supplier")
+//    @JoinColumn(name = "productId")
+    private List<Products> products;
 
     public Supplier() {}
 
-    public Supplier(String name, String city, Long phone, Products products) {
+    public Supplier(String name, String city, Long phone) {
         this.name = name;
         this.city = city;
         this.phone = phone;
-        this.products = products;
     }
 
     public int getId() {
@@ -58,11 +61,11 @@ public class Supplier {
         this.phone = phone;
     }
 
-    public Products getProducts() {
+    public List<Products> getProducts() {
         return products;
     }
 
-    public void setProducts(Products products) {
+    public void setProducts(List<Products> products) {
         this.products = products;
     }
 }

@@ -1,0 +1,35 @@
+<div th:insert="~{layout/main :: html}" th:with="content=~{::section}">
+    <section>
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold">Product Inventory</h2>
+            <a th:href="@{/products/add}" class="bg-green-500 text-white px-4 py-2 rounded">+ Add Product</a>
+        </div>
+
+        <table class="w-full text-left border-collapse">
+            <thead>
+            <tr class="bg-gray-200">
+                <th class="p-3">ID</th>
+                <th class="p-3">Name</th>
+                <th class="p-3">Category</th>
+                <th class="p-3">Price</th>
+                <th class="p-3">Qty</th>
+                <th class="p-3">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${products}" class="border-b hover:bg-gray-50">
+                <td class="p-3" th:text="${p.id}"></td>
+                <td class="p-3" th:text="${p.name}"></td>
+                <td class="p-3" th:text="${p.category}"></td>
+                <td class="p-3" th:text="${p.price}"></td>
+                <td class="p-3" th:text="${p.quantity}"></td>
+                <td class="p-3">
+                    <a th:href="@{/products/delete/{id}(id=${p.id})}"
+                       class="text-red-600 hover:text-red-900"
+                       onclick="return confirm('Delete this product?')">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

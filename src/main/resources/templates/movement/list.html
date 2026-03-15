@@ -1,0 +1,33 @@
+<div th:insert="~{layout/main :: html}" th:with="content=~{::section}">
+    <section>
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800">Stock Activity Log</h2>
+            <a th:href="@{/movements/add}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+                + Record Movement
+            </a>
+        </div>
+
+        <table class="w-full text-left border-collapse bg-white shadow-sm rounded-lg overflow-hidden">
+            <thead class="bg-gray-50">
+            <tr>
+                <th class="p-4 border-b">Date</th>
+                <th class="p-4 border-b">Product</th>
+                <th class="p-4 border-b text-center">Type</th>
+                <th class="p-4 border-b">Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="m : ${movements}" class="border-b">
+                <td class="p-4" th:text="${m.date}"></td>
+                <td class="p-4 font-medium text-gray-900" th:text="${m.products.name}"></td>
+                <td class="p-4 text-center">
+                        <span th:text="${m.type}"
+                              th:class="${m.type.name() == 'In' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} + ' px-3 py-1 rounded-full text-sm font-bold'">
+                        </span>
+                </td>
+                <td class="p-4 font-mono" th:text="${m.quantity}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

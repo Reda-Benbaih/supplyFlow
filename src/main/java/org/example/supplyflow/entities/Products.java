@@ -3,6 +3,9 @@ package org.example.supplyflow.entities;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -20,20 +23,19 @@ public class Products {
     @JoinColumn(name = "supplierId")
     private Supplier supplier;
 
-    @OneToMany
-    @JoinColumn(name = "stockMouvementId")
-    private StockMovement stockMovement;
+    @OneToMany(mappedBy = "products")
+//    @JoinColumn(name = "stockMouvementId")
+    private List<StockMovement> stockMovement;
 
 
     public Products(){}
 
-    public Products(String name, String category, BigDecimal price, int quantity, Supplier supplier, StockMovement stockMovement) {
+    public Products(String name, String category, BigDecimal price, int quantity, Supplier supplier) {
         this.name = name;
         this.category = category;
         this.price = price;
         this.quantity = quantity;
         this.supplier = supplier;
-        this.stockMovement = stockMovement;
     }
 
     public int getId() {
@@ -84,11 +86,11 @@ public class Products {
         this.supplier = supplier;
     }
 
-    public StockMovement getStockMovement() {
+    public List<StockMovement> getStockMovement() {
         return stockMovement;
     }
 
-    public void setStockMovement(StockMovement stockMovement) {
+    public void setStockMovement(List<StockMovement> stockMovement) {
         this.stockMovement = stockMovement;
     }
 }

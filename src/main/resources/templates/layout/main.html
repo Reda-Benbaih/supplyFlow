@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SupplyFlow Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<nav class="bg-blue-600 p-4 text-white shadow-lg">
+    <div class="container mx-auto flex justify-between">
+        <h1 class="text-xl font-bold">SupplyFlow</h1>
+        <div class="space-x-4">
+            <a th:href="@{/products}" class="hover:underline">Products</a>
+            <a th:href="@{/suppliers}" class="hover:underline">Suppliers</a>
+            <a th:href="@{/movements}" class="hover:underline">Movements</a>
+        </div>
+    </div>
+</nav>
+
+<main class="container mx-auto mt-10 p-6 bg-white rounded shadow">
+    <div th:replace="${content}"></div>
+</main>
+</body>
+</html>
